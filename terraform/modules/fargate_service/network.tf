@@ -1,12 +1,12 @@
 
 data "aws_vpc" "main" {
   filter {
-      name = "tag-value"
-      values = ["${var.vpc_name}"]
+    name   = "tag-value"
+    values = ["${var.vpc_name}"]
   }
   filter {
-      name = "tag-key"
-      values = ["Name"]
+    name   = "tag-key"
+    values = ["Name"]
   }
 }
 
@@ -37,13 +37,13 @@ resource "aws_route_table" "private" {
 }
 
 resource "aws_route_table_association" "public" {
-  for_each          = var.public_subnets
+  for_each       = var.public_subnets
   subnet_id      = aws_subnet.public[each.key].id
   route_table_id = aws_route_table.public.id
 }
 
 resource "aws_route_table_association" "private" {
-  for_each          = var.public_subnets
+  for_each       = var.public_subnets
   subnet_id      = aws_subnet.private[each.key].id
   route_table_id = aws_route_table.private.id
 }
